@@ -61,7 +61,7 @@ public class Bus {
 	@Range(min=0,max=30, message = "Seats should be of between 0 to 30")
 	private Integer availableSeats;
 	
-	@ManyToOne
-	@JoinColumn(name = "route_FK")
-	private Route route;
+//	@ManyToOne
+//	@JoinColumn(name = "route_FK")
+//	private Route route;
 }
