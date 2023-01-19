@@ -12,7 +12,6 @@ public class Route {
 	private Integer distence;
 	public Route() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Route(Integer routeid, String routefrom, String routeto, Integer distence) {
 		super();

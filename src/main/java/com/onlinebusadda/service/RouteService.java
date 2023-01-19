@@ -1,9 +1,8 @@
 package com.onlinebusadda.service;
-
+import com.onlinebusadda.model.*;
+import com.onlinebusadda.exception.*;
 import java.util.List;
 
-import com.example.demo.Route.Exception.RoutesException;
-import com.example.demo.Route.Module.Route;
 
 
 public interface RouteService {
