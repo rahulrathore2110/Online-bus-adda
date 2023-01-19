@@ -55,5 +55,6 @@ public class User {
 	//@JsonIgnore
 	//@OneToOne
 	//private Reservation reservation;
+	//model class
 
 }
