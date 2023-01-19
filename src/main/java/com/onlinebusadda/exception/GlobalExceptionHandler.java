@@ -26,6 +26,54 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
 
 	}
+	
+	
+	// Routes Exception Handler
+	
+	@ExceptionHandler(RoutesException.class)
+	public ResponseEntity<MyErrorDetails> routesExceptionHandler(RoutesException e, WebRequest req) {
+
+		MyErrorDetails err = new MyErrorDetails();
+
+		err.setTimeStamp(LocalDateTime.now());
+		err.setMessage(e.getMessage());
+		err.setDetails(req.getDescription(false));
+
+		return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+
+	}
+	
+	
+	// User Exception Handler
+	
+	@ExceptionHandler(UserException.class)
+	public ResponseEntity<MyErrorDetails> userExceptionHandler(UserException e, WebRequest req) {
+
+		MyErrorDetails err = new MyErrorDetails();
+
+		err.setTimeStamp(LocalDateTime.now());
+		err.setMessage(e.getMessage());
+		err.setDetails(req.getDescription(false));
+
+		return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+
+	}
+	
+	
+	// Bus Exception Handler
+	
+	@ExceptionHandler(BusException.class)
+	public ResponseEntity<MyErrorDetails> busExceptionHandler(BusException e, WebRequest req) {
+
+		MyErrorDetails err = new MyErrorDetails();
+
+		err.setTimeStamp(LocalDateTime.now());
+		err.setMessage(e.getMessage());
+		err.setDetails(req.getDescription(false));
+
+		return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+
+	}
 
 	// Generic Exception Handler
 	
