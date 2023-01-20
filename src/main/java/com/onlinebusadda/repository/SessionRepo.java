@@ -8,5 +8,5 @@ import com.onlinebusadda.model.CurrentUserSession;
 @Repository
 public interface SessionRepo extends JpaRepository<CurrentUserSession, Integer>{
 	
-	public CurrentUserSession findByUuid(String uuid);
+	public CurrentUserSession findByUuid(String uUid);
 }
