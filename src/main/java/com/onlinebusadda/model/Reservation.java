@@ -18,8 +18,6 @@ public class Reservation {
 	@NotNull
     private String reservationStatus;
 	@NotNull
-    private String reservationType;
-	@NotNull
 	private LocalDate reservationDate;
 	@NotNull
 	private LocalTime reservationTime;
@@ -41,13 +39,14 @@ public class Reservation {
 
 	
 	//Parameterized Constructor
-	public Reservation(Integer reservationID, @NotNull String reservationStatus, @NotNull String reservationType,
-			@NotNull LocalDate reservationDate, @NotNull LocalTime reservationTime, @NotNull String source,
-			@NotNull String destination, @NotNull Integer noOfSeatsBooked, Bus bus, User user) {
+	
+
+	public Reservation(Integer reservationID, @NotNull String reservationStatus, @NotNull LocalDate reservationDate,
+			@NotNull LocalTime reservationTime, @NotNull String source, @NotNull String destination,
+			@NotNull Integer noOfSeatsBooked, Bus bus, User user) {
 		super();
 		this.reservationID = reservationID;
 		this.reservationStatus = reservationStatus;
-		this.reservationType = reservationType;
 		this.reservationDate = reservationDate;
 		this.reservationTime = reservationTime;
 		this.source = source;
@@ -56,12 +55,31 @@ public class Reservation {
 		this.bus = bus;
 		this.user = user;
 	}
-
-	// Getters and Setters
 	
+	
+	
+
+	// ToString method
+	
+	@Override
+	public String toString() {
+		return "Reservation [reservationID=" + reservationID + ", reservationStatus=" + reservationStatus
+				+ ", reservationDate=" + reservationDate + ", reservationTime=" + reservationTime + ", source=" + source
+				+ ", destination=" + destination + ", noOfSeatsBooked=" + noOfSeatsBooked + ", bus=" + bus + ", user="
+				+ user + "]";
+	}
+
+
+
+
+
+	// Getters and Setters	
+		
+		
 	public Integer getReservationID() {
 		return reservationID;
 	}
+
 
 
 	public void setReservationID(Integer reservationID) {
@@ -76,16 +94,6 @@ public class Reservation {
 
 	public void setReservationStatus(String reservationStatus) {
 		this.reservationStatus = reservationStatus;
-	}
-
-
-	public String getReservationType() {
-		return reservationType;
-	}
-
-
-	public void setReservationType(String reservationType) {
-		this.reservationType = reservationType;
 	}
 
 
@@ -156,17 +164,6 @@ public class Reservation {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-
-	// ToString method
-	
-	@Override
-	public String toString() {
-		return "Reservation [reservationID=" + reservationID + ", reservationStatus=" + reservationStatus
-				+ ", reservationType=" + reservationType + ", reservationDate=" + reservationDate + ", reservationTime="
-				+ reservationTime + ", source=" + source + ", destination=" + destination + ", noOfSeatsBooked="
-				+ noOfSeatsBooked + "]";
 	}
 	
 }
