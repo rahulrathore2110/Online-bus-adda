@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.onlinebusadda.exception.ReservationException;
 import com.onlinebusadda.model.Reservation;
+import com.onlinebusadda.repository.AdminSessionRepo;
 import com.onlinebusadda.repository.ReservationRepo;
+import com.onlinebusadda.repository.SessionRepo;
+import com.onlinebusadda.repository.UserRepo;
 import com.onlinebusadda.service.ReservationService;
 
 @Service
@@ -15,6 +18,19 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Autowired
 	private ReservationRepo reservationRepo;
+	
+	@Autowired
+	private SessionRepo sessionRepo;
+	
+	@Autowired
+	private AdminSessionRepo adminSessionRepo;
+	
+	
+	@Autowired
+	private UserRepo userRepo;
+	
+	
+	
 	
 	@Override
 	public Reservation addReservation(Reservation reservation, String key) throws ReservationException {
