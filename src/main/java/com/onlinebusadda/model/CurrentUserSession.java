@@ -16,7 +16,7 @@ public class CurrentUserSession {
 	@Column(unique = true)
 	private Integer userId;
 	private String type;
-	private String uuid;
+	private String uUid;
 	private LocalDateTime localDateTime;
 	
 	
@@ -28,11 +28,11 @@ public class CurrentUserSession {
 
 
 
-	public CurrentUserSession(Integer userId, String type, String uuid, LocalDateTime localDateTime) {
+	public CurrentUserSession(Integer userId, String type, String uUid, LocalDateTime localDateTime) {
 		super();
 		this.userId = userId;
 		this.type = type;
-		this.uuid = uuid;
+		this.uUid = uUid;
 		this.localDateTime = localDateTime;
 	}
 
@@ -61,13 +61,13 @@ public class CurrentUserSession {
 
 
 	public String getUuid() {
-		return uuid;
+		return uUid;
 	}
 
 
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setUuid(String uUid) {
+		this.uUid = uUid;
 	}
 
 
@@ -86,7 +86,7 @@ public class CurrentUserSession {
 
 	@Override
 	public String toString() {
-		return "CurrentUserSession [userId=" + userId + ", type=" + type + ", uuid=" + uuid + ", localDateTime="
+		return "CurrentUserSession [userId=" + userId + ", type=" + type + ", uUid=" + uUid + ", localDateTime="
 				+ localDateTime + "]";
 	}
 
@@ -94,7 +94,7 @@ public class CurrentUserSession {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(localDateTime, type, userId, uuid);
+		return Objects.hash(localDateTime, type, userId, uUid);
 	}
 
 
@@ -114,7 +114,7 @@ public class CurrentUserSession {
 		CurrentUserSession other = (CurrentUserSession) obj;
 		
 		return Objects.equals(localDateTime, other.localDateTime) && Objects.equals(type, other.type)
-				&& Objects.equals(userId, other.userId) && Objects.equals(uuid, other.uuid);
+				&& Objects.equals(userId, other.userId) && Objects.equals(uUid, other.uUid);
 	}
 	
 	
