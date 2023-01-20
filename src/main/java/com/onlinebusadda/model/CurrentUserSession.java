@@ -7,7 +7,8 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 @Entity
 public class CurrentUserSession {
-
+	
+	// current user
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer currentId;

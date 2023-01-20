@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface LoginService {
 	
+	//login and logout methods 
 	public String logIntoAccount(LoginDTO dto) throws LoginException;
 	
 	public String logOutFromAccount(String key) throws LoginException;
