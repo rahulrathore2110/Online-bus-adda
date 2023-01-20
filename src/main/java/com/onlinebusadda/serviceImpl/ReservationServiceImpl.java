@@ -15,7 +15,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	
 	@Autowired
-	private ReservationRepo repo;
+	private ReservationRepo reservationRepo;
 	
 	@Override
 	public Reservation addReservation(Reservation reservation) throws ReservationException {
