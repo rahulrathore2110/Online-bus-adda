@@ -11,6 +11,6 @@ public interface RouteService {
 	public Route updateRoute(Route routes)throws RoutesException;
 	public Route deleteRoute(Integer Routeid)throws RoutesException;
 	public Route viewRoute(Integer rouInid)throws RoutesException;
-	 public List<Route> viewallRoute() throws RoutesException;
+	 public List<Route> viewallRoute( Integer Routeid ) throws RoutesException;
 
 }
