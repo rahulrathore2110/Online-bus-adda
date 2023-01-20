@@ -5,10 +5,13 @@ import com.onlinebusadda.model.UserType;
 import javax.validation.constraints.NotNull;
 
 public class LoginDTO {
+	
 	@NotNull(message ="Email cannot be null.")
 	private String email;
+	
 	@NotNull(message ="Password cannot be null.")
 	private String password;
+	
 	@NotNull(message ="User cannot be null.")
 	private UserType userType;
 	

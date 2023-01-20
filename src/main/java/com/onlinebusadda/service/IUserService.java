@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IUserService {
 	
-	
+	//Methods of user
 	public User addUser(User user) throws UserException;
 	
 	public User updateUser(User user,String key) throws UserException;
