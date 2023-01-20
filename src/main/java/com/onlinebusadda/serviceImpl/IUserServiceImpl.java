@@ -1,13 +1,14 @@
 package com.onlinebusadda.serviceImpl;
 
 import java.util.List;
+
+import com.onlinebusadda.model.CurrentUserSession;
+import com.onlinebusadda.repository.CurrentUserSessionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onlinebusadda.exception.UserException;
-import com.onlinebusadda.model.CurrentUserSession;
 import com.onlinebusadda.model.User;
-import com.onlinebusadda.repository.SessionRepo;
 import com.onlinebusadda.repository.UserRepo;
 import com.onlinebusadda.service.IUserService;
 
@@ -20,11 +21,11 @@ public class IUserServiceImpl implements IUserService{
 	private UserRepo uRepo;
 	
 	@Autowired
-	private SessionRepo srepo;
+	private CurrentUserSessionRepo srepo;
 	
 	@Override
 	public User addUser(User user) throws UserException {
-		User u= uRepo.findByUserName(user.getUserName());
+		User u= uRepo.findByEmail(user.getEmail());
 		
 		if(u!=null) {
 			throw new UserException("User already exist with this username.");
@@ -45,9 +46,9 @@ public class IUserServiceImpl implements IUserService{
 		User curr=uRepo.findById(user.getUserLoginId())
 				.orElseThrow(()-> new UserException("User with User Id "+user.getUserLoginId()+" does not exist"));
 		
-		if (loggedInUser.getType().equalsIgnoreCase("Admin")) {
+		if (loggedInUser.getUserType().equals("ADMIN")) {
 		
-			if (user.getContact() != null) curr.setContact(user.getContact());
+			if (user.getContact() != null ) curr.setContact(user.getContact());
 			
 			if (user.getEmail() != null) curr.setEmail(user.getEmail());
 			
@@ -57,7 +58,7 @@ public class IUserServiceImpl implements IUserService{
 			
 			if (user.getPassword() != null) curr.setPassword(user.getPassword());
 			
-			if (user.getUserName() != null) curr.setUserName(user.getUserName());
+
 			
 			User saved = uRepo.save(curr);
 			
@@ -65,7 +66,7 @@ public class IUserServiceImpl implements IUserService{
 		}
 		
 		
-		if(user.getUserLoginId()==loggedInUser.getUserId()) {
+		if(user.getUserLoginId()==loggedInUser.getCurrentId()) {
 		
 			if (user.getContact() != null) curr.setContact(user.getContact());
 			
@@ -77,7 +78,7 @@ public class IUserServiceImpl implements IUserService{
 			
 			if (user.getPassword() != null) curr.setPassword(user.getPassword());
 			
-			if (user.getUserName() != null) curr.setUserName(user.getUserName());
+
 			
 			User saved = uRepo.save(curr);
 			
@@ -103,12 +104,12 @@ public class IUserServiceImpl implements IUserService{
 		User u=uRepo.findById(userId)
 				.orElseThrow(()-> new UserException("User with User Id "+userId+" does not exist"));
 		
-		if (loggedInUser.getType().equalsIgnoreCase("Admin")) {
+		if (loggedInUser.getUserType().equals("ADMIN")) {
 			uRepo.delete(u);
 			return u;
 		}
 		
-		if(u.getUserLoginId()==loggedInUser.getUserId()) {
+		if(u.getUserLoginId()==loggedInUser.getCurrentId()) {
 			uRepo.delete(u);
 			srepo.delete(loggedInUser);
 			return u;
@@ -129,7 +130,7 @@ public class IUserServiceImpl implements IUserService{
 			throw new UserException("Please provide a valid key to view user.");
 		}
 		
-		if (loggedInUser.getType().equalsIgnoreCase("Admin")) {
+		if (loggedInUser.getUserType().equals("ADMIN")) {
 			
 			User u=uRepo.findById(userId)
 					.orElseThrow(()-> new UserException("User with User Id "+userId+" does not exist"));
@@ -137,11 +138,11 @@ public class IUserServiceImpl implements IUserService{
 			return u;
 		}
 		
-		else if (loggedInUser.getType().equalsIgnoreCase("user")){
+		else if (loggedInUser.getUserType().equals("USER")){
 			User u=uRepo.findById(userId)
 					.orElseThrow(()-> new UserException("User with User Id "+userId+" does not exist"));
 		
-			if(u.getUserLoginId()==loggedInUser.getUserId()) {
+			if(u.getUserLoginId()==loggedInUser.getCurrentId()) {
 				return u;
 			}
 			
@@ -163,7 +164,7 @@ public class IUserServiceImpl implements IUserService{
 			throw new UserException("Please provide a valid key to delete user.");
 		}
 		
-		if (loggedInUser.getType().equalsIgnoreCase("admin")) {
+		if (loggedInUser.getCurrentId().equals("ADMIN")) {
 			
 			List<User> users=uRepo.findAll();
 		

@@ -1,8 +1,10 @@
 package com.onlinebusadda.service;
 
 import com.onlinebusadda.exception.LoginException;
-import com.onlinebusadda.model.LoginDTO;
+import com.onlinebusadda.DTO.LoginDTO;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface LoginService {
 	
 	public String logIntoAccount(LoginDTO dto) throws LoginException;

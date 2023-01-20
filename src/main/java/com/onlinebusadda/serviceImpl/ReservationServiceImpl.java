@@ -1,22 +1,14 @@
 package com.onlinebusadda.serviceImpl;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import com.onlinebusadda.exception.AdminException;
 import com.onlinebusadda.exception.BusException;
 import com.onlinebusadda.exception.ReservationException;
 import com.onlinebusadda.exception.UserException;
-import com.onlinebusadda.model.Bus;
-import com.onlinebusadda.model.CurrentUserSession;
 import com.onlinebusadda.model.Reservation;
-import com.onlinebusadda.model.User;
-import com.onlinebusadda.repository.BusRepo;
-import com.onlinebusadda.repository.ReservationRepo;
-import com.onlinebusadda.repository.SessionRepo;
-import com.onlinebusadda.repository.UserRepo;
 import com.onlinebusadda.service.ReservationService;
 
 @Service

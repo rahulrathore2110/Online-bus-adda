@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.onlinebusadda.exception.LoginException;
-import com.onlinebusadda.model.LoginDTO;
+import com.onlinebusadda.DTO.LoginDTO;
 import com.onlinebusadda.service.LoginService;
 
 

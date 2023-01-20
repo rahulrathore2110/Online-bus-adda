@@ -2,11 +2,7 @@ package com.onlinebusadda.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity   // Its Bean class so we need to annotate with the annotation @Entity 
@@ -28,18 +24,14 @@ public class Reservation {
 	@NotNull
 	private Integer noOfSeatsBooked;
 	
-	@ManyToOne
+	@OneToOne
 	private Bus bus;
 	
-	@ManyToOne
+	@OneToOne
 	private User user;
-	
-	//No Argument Constructor
+
 	public Reservation() {}
 
-	
-	//Parameterized Constructor
-	
 
 	public Reservation(Integer reservationID, @NotNull String reservationStatus, @NotNull LocalDate reservationDate,
 			@NotNull LocalTime reservationTime, @NotNull String source, @NotNull String destination,
@@ -56,10 +48,7 @@ public class Reservation {
 		this.user = user;
 	}
 	
-	
-	
 
-	// ToString method
 	
 	@Override
 	public String toString() {
@@ -70,11 +59,6 @@ public class Reservation {
 	}
 
 
-
-
-
-	// Getters and Setters	
-		
 		
 	public Integer getReservationID() {
 		return reservationID;

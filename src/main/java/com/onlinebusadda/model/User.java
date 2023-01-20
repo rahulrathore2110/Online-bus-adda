@@ -1,14 +1,13 @@
 package com.onlinebusadda.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -16,9 +15,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userLoginId;
-	
-	private String userName;
-	
+
 	@Size(min = 6, message="Password length must be between 6 to 10 character")
 	@Size(max = 10, message = "Password length must be between 6 to 10 character")
 	private String password;
@@ -33,30 +30,29 @@ public class User {
 	private String email;
 	
 	@JsonIgnore
-	@OneToOne
-	private Reservation reservation;
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+
+	private List<Reservation> reservation = new ArrayList<>();
+
+	@Enumerated
+	private UserType userType;
 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(Integer userLoginId, String userName,
-			@Size(min = 6, message = "Password length must be between 6 to 10 character") @Size(max = 10, message = "Password length must be between 6 to 10 character") String password,
-			String firstName, String lastName, Long contact,
-			@Email(message = "Please enter valid email Id") String email, Reservation reservation) {
-		super();
+
+	public User(Integer userLoginId, String password, String firstName, String lastName, Long contact, String email, List<Reservation> reservation, UserType userType) {
 		this.userLoginId = userLoginId;
-		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.contact = contact;
 		this.email = email;
 		this.reservation = reservation;
+		this.userType = userType;
 	}
-	
-	
 
 	public Integer getUserLoginId() {
 		return userLoginId;
@@ -64,14 +60,6 @@ public class User {
 
 	public void setUserLoginId(Integer userLoginId) {
 		this.userLoginId = userLoginId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -113,31 +101,20 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
-	public Reservation getReservation() {
+	public List<Reservation> getReservation() {
 		return reservation;
 	}
-	
-	
 
-	public void setReservation(Reservation reservation) {
+	public void setReservation(List<Reservation> reservation) {
 		this.reservation = reservation;
 	}
-	
-	
 
-	@Override
-	public String toString() {
-		return "User [userLoginId=" + userLoginId + ", userName=" + userName + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", contact=" + contact + ", email=" + email + ", reservation="
-				+ reservation + "]";
+	public UserType getUserType() {
+		return userType;
 	}
-	
-	
-	
-	
-	
 
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
 }

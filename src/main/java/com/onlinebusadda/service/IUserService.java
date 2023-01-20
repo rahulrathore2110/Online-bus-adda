@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.onlinebusadda.exception.UserException;
 import com.onlinebusadda.model.User;
+import org.springframework.stereotype.Service;
 
 
-
+@Service
 public interface IUserService {
 	
 	

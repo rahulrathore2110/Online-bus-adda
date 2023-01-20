@@ -3,8 +3,11 @@ package com.onlinebusadda.serviceImpl;
 import com.onlinebusadda.exception.AdminException;
 import com.onlinebusadda.exception.BusException;
 import com.onlinebusadda.exception.RoutesException;
+import com.onlinebusadda.exception.UserException;
 import com.onlinebusadda.model.Bus;
+import com.onlinebusadda.model.CurrentUserSession;
 import com.onlinebusadda.repository.BusRepo;
+import com.onlinebusadda.repository.CurrentUserSessionRepo;
 import com.onlinebusadda.repository.RoutesRepo;
 import com.onlinebusadda.service.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +24,30 @@ public class BusServiceImpl implements BusService {
     @Autowired
     private RoutesRepo routesRepo;
 
+    private CurrentUserSessionRepo crepo;
+
 
     @Override
-    public Bus addBus(Bus bus, String key) throws BusException, AdminException {
-        return null;
+    public Bus addBus(Bus bus, String key) throws BusException, UserException {
+
+        CurrentUserSession currentUserSession = crepo.findByUuid(key);
+
+        if(currentUserSession == null){
+            throw new UserException("Admin Not logged in");
+
+        }
+
+        if(currentUserSession.getUserType().equals("ADMIN")){
+
+            busRepo.save(bus);
+            return bus;
+
+        }else{
+            throw new UserException("Plz logged in as Admin");
+
+        }
+
+
     }
 
     @Override
@@ -39,6 +62,8 @@ public class BusServiceImpl implements BusService {
 
     @Override
     public Bus viewBus(int busId) throws BusException {
+
+
         Optional<Bus> opt = busRepo.findById(busId);
         if(opt.isPresent()) {
             Bus bus = opt.get();

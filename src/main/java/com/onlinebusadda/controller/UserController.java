@@ -24,7 +24,6 @@ import com.onlinebusadda.service.IUserService;
 
 
 @RestController
-@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
