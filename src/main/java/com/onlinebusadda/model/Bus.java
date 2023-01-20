@@ -11,16 +11,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class Bus {
 
     @Id
@@ -62,6 +55,40 @@ public class Bus {
     private Integer availableSeats;
 
 	@ManyToOne
-//	@JoinColumn(name = "route_FK")
+	@JoinColumn(name = "route_FK")
 	private Route route;
+
+    public Bus() {
+    }
+
+    public Bus(Integer busId, String busName, String driverName, String busType, String routeFrom, String routeTo, LocalTime arrivalTime, LocalTime departureTime, Integer seats, Integer availableSeats, Route route) {
+        this.busId = busId;
+        this.busName = busName;
+        this.driverName = driverName;
+        this.busType = busType;
+        this.routeFrom = routeFrom;
+        this.routeTo = routeTo;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.seats = seats;
+        this.availableSeats = availableSeats;
+        this.route = route;
+    }
+
+    @Override
+    public String toString() {
+        return "Bus{" +
+                "busId=" + busId +
+                ", busName='" + busName + '\'' +
+                ", driverName='" + driverName + '\'' +
+                ", busType='" + busType + '\'' +
+                ", routeFrom='" + routeFrom + '\'' +
+                ", routeTo='" + routeTo + '\'' +
+                ", arrivalTime=" + arrivalTime +
+                ", departureTime=" + departureTime +
+                ", seats=" + seats +
+                ", availableSeats=" + availableSeats +
+                ", route=" + route +
+                '}';
+    }
 }
