@@ -29,7 +29,7 @@ public class LoginServiceImpl implements LoginService{
 
 
 	@Override
-	public String logIntoAccount(LoginDTO dto) throws LoginException {
+	public CurrentUserSession logIntoAccount(LoginDTO dto) throws LoginException {
 		User existingUser = uRepo.findByEmail(dto.getEmail());
 
 		if(existingUser == null) throw new LoginException("User Not exist");
@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService{
 
 			crepo.save(currentUserSession);
 
-			return  currentUserSession.toString();
+			return  currentUserSession;
 
 		}else {
 

@@ -2,6 +2,7 @@ package com.onlinebusadda.controller;
 
 import javax.validation.Valid;
 
+import com.onlinebusadda.model.CurrentUserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,9 @@ public class UserLoginController {
 	private LoginService lService;
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> userLoginHandler(@Valid @RequestBody LoginDTO dto) throws LoginException{
-		String msg=lService.logIntoAccount(dto);
-		return new ResponseEntity<String>(msg,HttpStatus.ACCEPTED);
+	public ResponseEntity<CurrentUserSession> userLoginHandler(@Valid @RequestBody LoginDTO dto) throws LoginException{
+		CurrentUserSession msg=lService.logIntoAccount(dto);
+		return new ResponseEntity<CurrentUserSession>(msg,HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/logout")

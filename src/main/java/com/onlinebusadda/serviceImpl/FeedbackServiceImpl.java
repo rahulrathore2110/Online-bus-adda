@@ -13,10 +13,11 @@ import com.onlinebusadda.repository.FeedbackRepo;
 import com.onlinebusadda.repository.UserRepo;
 import com.onlinebusadda.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired
@@ -68,17 +69,42 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Feedback updateFeedback(Feedback feedback, String key) throws FeedbackException {
-        return null;
+    public Feedback updateFeedback(Feedback feedback, String key) throws FeedbackException ,UserException{
+        CurrentUserSession existingUser = crepo.findByUuid(key);
+
+        if(existingUser == null){
+            throw new UserException("User Not logged in");
+        }
+        if (existingUser.getEmail().equals(feedback.getUser().getEmail())){
+            frepo.save(feedback);
+
+            return feedback;
+        }else {
+            throw new UserException("you Can't update with this email Id plz change");
+        }
+
+
+
     }
 
     @Override
     public Feedback viewFeedback(Integer feedbackId) throws FeedbackException {
-        return null;
+        Optional<Feedback> feedback = frepo.findById(feedbackId);
+
+        if(feedback.isPresent()){
+
+            Feedback fd = feedback.get();
+
+            return fd;
+        }else {
+            throw new FeedbackException("Feedback not found with this Id");
+        }
     }
 
     @Override
     public List<Feedback> viewAllFeedback() throws FeedbackException {
-        return null;
+       List<Feedback> feedbacks = frepo.findAll();
+
+       return feedbacks;
     }
 }
