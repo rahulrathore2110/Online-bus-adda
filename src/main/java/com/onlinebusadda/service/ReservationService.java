@@ -10,7 +10,7 @@ import com.onlinebusadda.model.Reservation;
 public interface ReservationService {
 
 	
-	public Reservation addReservation(Reservation reservation, Integer busId, Integer userLoginId, String uuid) throws ReservationException, BusException, UserException;
+	public Reservation addReservation(Reservation reservation, Integer userLoginId, String uuid) throws ReservationException, BusException, UserException;
 	
 	public Reservation deleteReservation(Integer reservationId, String uuid) throws ReservationException, BusException, UserException;
 	

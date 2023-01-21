@@ -2,8 +2,17 @@ package com.onlinebusadda.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity   // Its Bean class so we need to annotate with the annotation @Entity 
 public class Reservation {
@@ -14,6 +23,8 @@ public class Reservation {
 	@NotNull
     private String reservationStatus;
 	@NotNull
+	@JsonFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate reservationDate;
 	@NotNull
 	private LocalTime reservationTime;

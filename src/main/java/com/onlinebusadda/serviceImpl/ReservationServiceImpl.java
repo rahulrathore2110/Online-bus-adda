@@ -37,7 +37,7 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	
 	@Override
-	public Reservation addReservation(Reservation reservation, Integer busId, Integer userLoginId, String uuid)
+	public Reservation addReservation(Reservation reservation, Integer userLoginId, String uuid)
 			throws ReservationException, BusException, UserException {
 		
        CurrentUserSession loggedInUser= currentUserSessionRepo.findByUuid(uuid);
@@ -46,7 +46,7 @@ public class ReservationServiceImpl implements ReservationService {
 			throw new UserException("Please provide a valid User key to reserve seats...!");
 		}
 		
-		Bus bus =	busRepo.findById(busId).orElseThrow(() -> new BusException("Bus not found with bisId "+busId));
+		Bus bus =	busRepo.findById(reservation.getBus().getBusId()).orElseThrow(() -> new BusException("Bus not found with bisId "+reservation.getBus().getBusId()));
 		
 		User user = userRepo.findById(userLoginId).orElseThrow(()-> new UserException("User not found with userId "+userLoginId));
 		
