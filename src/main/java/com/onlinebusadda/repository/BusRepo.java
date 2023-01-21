@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface BusRepo extends JpaRepository<Bus,Integer> {
 
-    public Bus findByDriverName(String driverName);
-
     public List<Bus> findByBusType(String busType);
 
     public List<Bus> findByRouteFromAndRouteTo(String routeFrom,String routeTo);
