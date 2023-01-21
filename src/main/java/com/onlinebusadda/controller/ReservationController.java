@@ -28,10 +28,10 @@ public class ReservationController {
 	private ReservationService reservationService;
 
 	
-	@PostMapping("/addReservation/{busid}/{loginid}/{key}")
-	public ResponseEntity<Reservation> addReservationController(@Valid @RequestBody Reservation reservation,@PathVariable("busid") Integer busId,@PathVariable("loginid") Integer userLoginId,@PathVariable("key") String uuid) throws ReservationException, BusException, UserException{
-		
-		Reservation reservationBooked = reservationService.addReservation(reservation, busId, userLoginId, uuid);
+	@PostMapping("/addReservation/{key}")
+	public ResponseEntity<Reservation> addReservationController(@Valid @RequestBody Reservation reservation, @RequestParam(required = false) Integer userLoginId, @PathVariable("key") String uuid) throws ReservationException, BusException, UserException{
+
+		Reservation reservationBooked = reservationService.addReservation(reservation, userLoginId, uuid);
 		
 		return new ResponseEntity<Reservation>(reservationBooked, HttpStatus.ACCEPTED);
 	
