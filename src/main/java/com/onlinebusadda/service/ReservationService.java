@@ -10,13 +10,13 @@ import com.onlinebusadda.model.Reservation;
 public interface ReservationService {
 
 	
-	public Reservation addReservation(Reservation reservation, Integer busId, Integer userLoginId) throws ReservationException, BusException, UserException;
+	public Reservation addReservation(Reservation reservation, Integer busId, Integer userLoginId, String uuid) throws ReservationException, BusException, UserException;
 	
-	public Reservation deleteReservation(Integer reservationId, String key) throws ReservationException, BusException, UserException;
+	public Reservation deleteReservation(Integer reservationId, String uuid) throws ReservationException, BusException, UserException;
 	
-	public Reservation viewReservation(Integer reservationId, String key) throws ReservationException;
+	public Reservation viewReservation(Integer reservationId, String uuid) throws ReservationException, UserException;
 	
-	public List<Reservation> viewAllReservation(String key)throws ReservationException;
+	public List<Reservation> viewAllReservation(String uuid)throws ReservationException;
 	
 	public List<Reservation> getAllReservation(LocalDate date)throws ReservationException;
 	
