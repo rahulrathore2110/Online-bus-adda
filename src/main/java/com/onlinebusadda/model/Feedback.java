@@ -2,15 +2,28 @@ package com.onlinebusadda.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Feedback {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer feedBackId;
     private Integer driverRating;
     private Integer serviceRating;
     private  Integer overallRating = (driverRating + serviceRating )/2;
     private String comments;
     private LocalDateTime localDateTime;
+    
+//    @OneToOne
     private User user;
+    
+//    @OneToOne
     private Bus bus;
 
     public Feedback() {
