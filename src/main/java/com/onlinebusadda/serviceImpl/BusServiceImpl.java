@@ -1,8 +1,6 @@
 package com.onlinebusadda.serviceImpl;
 
-import com.onlinebusadda.exception.AdminException;
 import com.onlinebusadda.exception.BusException;
-import com.onlinebusadda.exception.RoutesException;
 import com.onlinebusadda.exception.UserException;
 import com.onlinebusadda.model.Bus;
 import com.onlinebusadda.model.CurrentUserSession;
@@ -34,35 +32,68 @@ public class BusServiceImpl implements BusService {
 
         if(currentUserSession == null){
             throw new UserException("Admin Not logged in");
-
         }
 
         if(currentUserSession.getUserType().equals("ADMIN")){
 
-            busRepo.save(bus);
-            return bus;
+                return busRepo.save(bus);
 
         }else{
-            throw new UserException("Plz logged in as Admin");
+            throw new UserException("Plz log in as Admin");
 
         }
-
-
     }
 
     @Override
-    public Bus updateBus(Bus bus, String key) throws BusException, AdminException, RoutesException {
-        return null;
+    public Bus updateBus(Bus bus, String key) throws BusException,UserException {
+        CurrentUserSession currentUserSession = crepo.findByUuid(key);
+
+        if (currentUserSession == null) {
+            throw new UserException("Admin Not logged in");
+        }
+
+        if (currentUserSession.getUserType().equals("ADMIN")) {
+            Optional<Bus> opt = busRepo.findById(bus.getBusId());
+            if (opt.isPresent()) {
+                busRepo.save(bus);
+                return bus;
+            }
+            else {
+                throw new BusException("No Bus found with given details");
+            }
+
+            } else {
+                throw new UserException("Plz log in as Admin");
+            }
     }
 
     @Override
-    public Bus deleteBus(int busId, String key) throws BusException, AdminException, RoutesException {
-        return null;
+    public Bus deleteBus(int busId, String key) throws BusException, UserException {
+        CurrentUserSession currentUserSession = crepo.findByUuid(key);
+
+        if(currentUserSession == null){
+            throw new UserException("Admin Not logged in");
+        }
+
+        if(currentUserSession.getUserType().equals("ADMIN")){
+            Optional<Bus> opt = busRepo.findById(busId);
+            if (opt.isPresent()) {
+                Bus existingBus = opt.get();
+                busRepo.delete(existingBus);
+                return existingBus;
+            }
+            else {
+                throw new BusException("No Bus found with given details");
+            }
+
+        }else {
+            throw new UserException("Plz log in as Admin");
+
+        }
     }
 
     @Override
     public Bus viewBus(int busId) throws BusException {
-
 
         Optional<Bus> opt = busRepo.findById(busId);
         if(opt.isPresent()) {
