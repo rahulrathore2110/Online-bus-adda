@@ -1,5 +1,3 @@
-# -tired-calendar-1389
-
 # Online Bus Adda (Bus Reservation)
 - A collaborative project of an online bus reservation system.
 - The Aim of this application is to form a bridge between Buses and customers.
@@ -32,6 +30,9 @@
 - swagger 
 - lombok
 - spring JPA
+
+
+<hr>
 
 
 <img src="1.png" height="600" width="1000">
