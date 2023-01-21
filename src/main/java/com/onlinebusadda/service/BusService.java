@@ -1,6 +1,4 @@
 package com.onlinebusadda.service;
-
-import com.onlinebusadda.exception.AdminException;
 import com.onlinebusadda.exception.BusException;
 import com.onlinebusadda.exception.RoutesException;
 import com.onlinebusadda.exception.UserException;
