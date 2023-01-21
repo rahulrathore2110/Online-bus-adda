@@ -2,7 +2,6 @@ package com.onlinebusadda.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import com.onlinebusadda.exception.AdminException;
 import com.onlinebusadda.exception.BusException;
 import com.onlinebusadda.exception.ReservationException;
 import com.onlinebusadda.exception.UserException;
