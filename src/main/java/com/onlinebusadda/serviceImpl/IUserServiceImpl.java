@@ -46,7 +46,7 @@ public class IUserServiceImpl implements IUserService{
 		User curr=uRepo.findById(user.getUserLoginId())
 				.orElseThrow(()-> new UserException("User with User Id "+user.getUserLoginId()+" does not exist"));
 		
-		if (loggedInUser.getUserType().equals("ADMIN")) {
+		if (loggedInUser.getUserType().equals("CUSTOMER")) {
 		
 			if (user.getContact() != null ) curr.setContact(user.getContact());
 			
@@ -66,7 +66,7 @@ public class IUserServiceImpl implements IUserService{
 		}
 		
 		
-		if(user.getUserLoginId()==loggedInUser.getCurrentId()) {
+		if(user.getEmail().equals(curr.getEmail())) {
 		
 			if (user.getContact() != null) curr.setContact(user.getContact());
 			
@@ -91,7 +91,7 @@ public class IUserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public User deleteUser(Integer userId,String key) throws UserException {
+	public User deleteUser(String key) throws UserException {
 		
 		CurrentUserSession loggedInUser=srepo.findByUuid(key);
 		
@@ -99,60 +99,43 @@ public class IUserServiceImpl implements IUserService{
 		
 			throw new UserException("Please provide a valid key to delete user.");
 		}
-		
-		
-		User u=uRepo.findById(userId)
-				.orElseThrow(()-> new UserException("User with User Id "+userId+" does not exist"));
-		
-		if (loggedInUser.getUserType().equals("ADMIN")) {
-			uRepo.delete(u);
-			return u;
-		}
-		
-		if(u.getUserLoginId()==loggedInUser.getCurrentId()) {
-			uRepo.delete(u);
+
+		User user = uRepo.findByEmail(loggedInUser.getEmail());
+
+		if(user != null){
+
+			uRepo.delete(user);
 			srepo.delete(loggedInUser);
-			return u;
+
+			return user;
+
+		}else {
+			throw new UserException("User not found with this email");
 		}
-		
-		else {
-			throw new UserException("Access denied.");
-		}
+
+
+
 		
 	}
 
 	@Override
-	public User viewUser(Integer userId,String key) throws UserException {
+	public User viewUser(String key) throws UserException {
 		
 		CurrentUserSession loggedInUser=srepo.findByUuid(key);
 		
 		if(loggedInUser==null) {
-			throw new UserException("Please provide a valid key to view user.");
+			throw new UserException("Please first login to view user details.");
 		}
-		
-		if (loggedInUser.getUserType().equals("ADMIN")) {
-			
-			User u=uRepo.findById(userId)
-					.orElseThrow(()-> new UserException("User with User Id "+userId+" does not exist"));
-			
-			return u;
+
+		User user = uRepo.findByEmail(loggedInUser.getEmail());
+
+		if(user == null){
+
+			throw new UserException("User not found");
 		}
-		
-		else if (loggedInUser.getUserType().equals("USER")){
-			User u=uRepo.findById(userId)
-					.orElseThrow(()-> new UserException("User with User Id "+userId+" does not exist"));
-		
-			if(u.getUserLoginId()==loggedInUser.getCurrentId()) {
-				return u;
-			}
-			
-			else {
-				throw new UserException("Invalid User details, please login first");
-			}
-			
-		}
-		else throw new UserException("Access denied");
-		
+
+		return user;
+
 	}
 
 	@Override
@@ -161,24 +144,22 @@ public class IUserServiceImpl implements IUserService{
 		CurrentUserSession loggedInUser=srepo.findByUuid(key);
 		
 		if(loggedInUser==null) {
-			throw new UserException("Please provide a valid key to delete user.");
+			throw new UserException("Please provide a valid key to find all user.");
 		}
-		
-		if (loggedInUser.getCurrentId().equals("ADMIN")) {
-			
+
+		User user = uRepo.findByEmail(loggedInUser.getEmail());
+
+
+
 			List<User> users=uRepo.findAll();
 		
 			if(users.size()!=0) {
 				return users;
+			}else {
+				throw new UserException("No user found");
 			}
 			
-			else {
-				throw new UserException("No User Found.");
-			}
-			
-		}
-		
-		else throw new UserException("Access denied");
+
 	}
 
 }

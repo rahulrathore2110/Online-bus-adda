@@ -22,6 +22,7 @@ public class BusServiceImpl implements BusService {
     @Autowired
     private RoutesRepo routesRepo;
 
+    @Autowired
     private CurrentUserSessionRepo crepo;
 
 
@@ -34,7 +35,8 @@ public class BusServiceImpl implements BusService {
             throw new UserException("Admin Not logged in");
         }
 
-        if(currentUserSession.getUserType().equals("ADMIN")){
+        if(currentUserSession.getUserType().name().equals("ADMIN")){
+
 
                 return busRepo.save(bus);
 

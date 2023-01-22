@@ -5,4 +5,6 @@ public enum UserType {
 	// Type of user
     ADMIN,CUSTOMER
 
+
+
 }

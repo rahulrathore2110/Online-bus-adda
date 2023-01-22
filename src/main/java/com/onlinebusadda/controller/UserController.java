@@ -41,15 +41,15 @@ public class UserController {
 		return new ResponseEntity<User>(u,HttpStatus.ACCEPTED);
 	}
 	
-	@DeleteMapping("delete/{userId}")
-	public ResponseEntity<User> deleteUserHandler(@PathVariable("userId") Integer userId,@RequestParam String key) throws UserException {
-		User u=uService.deleteUser(userId, key);
+	@DeleteMapping("delete")
+	public ResponseEntity<User> deleteUserHandler(@RequestParam String key) throws UserException {
+		User u=uService.deleteUser( key);
 		return new ResponseEntity<User>(u,HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/view/{userId}")
-	public ResponseEntity<User> viewUserHandler(@PathVariable("userId") Integer userId,@RequestParam String key) throws UserException {
-		User u=uService.viewUser(userId,key);
+	@GetMapping("/view")
+	public ResponseEntity<User> viewUserHandler(@RequestParam String key) throws UserException {
+		User u=uService.viewUser(key);
 		return new ResponseEntity<User>(u,HttpStatus.FOUND);
 	}
 	

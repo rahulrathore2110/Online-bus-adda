@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 @Entity
@@ -37,11 +39,13 @@ public class Bus {
     private String routeTo;
 
     @NotNull(message = "Arrival time cannot be null!")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm:ss")
     private LocalTime arrivalTime;
 
     @NotNull(message = "Arrival time cannot be null!")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm:ss")
     private LocalTime departureTime;
 
     @NotNull(message = "seats should not be null")
