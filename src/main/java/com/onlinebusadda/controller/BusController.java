@@ -1,6 +1,7 @@
 package com.onlinebusadda.controller;
 
 import com.onlinebusadda.exception.BusException;
+import com.onlinebusadda.exception.RoutesException;
 import com.onlinebusadda.exception.UserException;
 import com.onlinebusadda.model.Bus;
 import com.onlinebusadda.service.BusService;
@@ -17,9 +18,10 @@ public class BusController {
     @Autowired
     private BusService bService;
 
-    @PostMapping("/buses")
-    public ResponseEntity<Bus> addBus(@Valid @RequestBody Bus bus, @RequestParam(required = false) String key) throws BusException, UserException{
-        return new ResponseEntity<Bus>(bService.addBus(bus,key), HttpStatus.CREATED);
+    @PostMapping("/buses/{routeid}")
+    public ResponseEntity<Bus> addBus(@Valid @RequestBody Bus bus, @RequestParam(required = false) String key,
+                                      @PathVariable("routeid") Integer routeid) throws BusException, UserException, RoutesException {
+        return new ResponseEntity<Bus>(bService.addBus(bus,key,routeid), HttpStatus.CREATED);
 //		http://localhost:8888/buses     admin key
     }
 

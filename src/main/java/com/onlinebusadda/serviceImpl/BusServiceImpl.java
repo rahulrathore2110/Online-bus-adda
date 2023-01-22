@@ -1,9 +1,11 @@
 package com.onlinebusadda.serviceImpl;
 
 import com.onlinebusadda.exception.BusException;
+import com.onlinebusadda.exception.RoutesException;
 import com.onlinebusadda.exception.UserException;
 import com.onlinebusadda.model.Bus;
 import com.onlinebusadda.model.CurrentUserSession;
+import com.onlinebusadda.model.Route;
 import com.onlinebusadda.repository.BusRepo;
 import com.onlinebusadda.repository.CurrentUserSessionRepo;
 import com.onlinebusadda.repository.RoutesRepo;
@@ -27,7 +29,7 @@ public class BusServiceImpl implements BusService {
 
 
     @Override
-    public Bus addBus(Bus bus, String key) throws BusException, UserException {
+    public Bus addBus(Bus bus, String key,Integer routeId) throws BusException, UserException, RoutesException {
 
         CurrentUserSession currentUserSession = crepo.findByUuid(key);
 
@@ -37,8 +39,17 @@ public class BusServiceImpl implements BusService {
 
         if(currentUserSession.getUserType().name().equals("ADMIN")){
 
+            Optional<Route> route = routesRepo.findById(routeId);
 
+            if (route.isPresent()){
+
+                Route rr = route.get();
+                bus.setRoute(rr);
                 return busRepo.save(bus);
+            }else {
+
+                throw new RoutesException("Route not found whith this Id");
+            }
 
         }else{
             throw new UserException("Plz log in as Admin");
@@ -54,7 +65,7 @@ public class BusServiceImpl implements BusService {
             throw new UserException("Admin Not logged in");
         }
 
-        if (currentUserSession.getUserType().equals("ADMIN")) {
+        if (currentUserSession.getUserType().name().equals("ADMIN")) {
             Optional<Bus> opt = busRepo.findById(bus.getBusId());
             if (opt.isPresent()) {
                 busRepo.save(bus);
@@ -77,7 +88,7 @@ public class BusServiceImpl implements BusService {
             throw new UserException("Admin Not logged in");
         }
 
-        if(currentUserSession.getUserType().equals("ADMIN")){
+        if(currentUserSession.getUserType().name().equals("ADMIN")){
             Optional<Bus> opt = busRepo.findById(busId);
             if (opt.isPresent()) {
                 Bus existingBus = opt.get();

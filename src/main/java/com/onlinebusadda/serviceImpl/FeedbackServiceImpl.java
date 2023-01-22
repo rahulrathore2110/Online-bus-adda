@@ -12,6 +12,7 @@ import com.onlinebusadda.repository.CurrentUserSessionRepo;
 import com.onlinebusadda.repository.FeedbackRepo;
 import com.onlinebusadda.repository.UserRepo;
 import com.onlinebusadda.service.FeedbackService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,23 +89,89 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Feedback viewFeedback(Integer feedbackId) throws FeedbackException {
+    public Feedback viewFeedback(Integer feedbackId, String key) throws FeedbackException, UserException {
+
+        CurrentUserSession existingUSer = crepo.findByUuid(key);
+
+        if(existingUSer == null){
+            throw new UserException("Plz login ");
+        }
+
+
+
         Optional<Feedback> feedback = frepo.findById(feedbackId);
 
         if(feedback.isPresent()){
 
+
+
             Feedback fd = feedback.get();
 
-            return fd;
+            if(fd.getUser().getEmail().equals(existingUSer.getEmail())){
+                return fd;
+
+            }else {
+                throw new UserException("User does not match with this Email plz user other email");
+            }
+
+
         }else {
             throw new FeedbackException("Feedback not found with this Id");
         }
     }
 
     @Override
-    public List<Feedback> viewAllFeedback() throws FeedbackException {
-       List<Feedback> feedbacks = frepo.findAll();
+    public Feedback deleteFeedback(Integer feedbackId, String key) throws FeedbackException, UserException {
+        CurrentUserSession existingUser = crepo.findByUuid(key);
 
-       return feedbacks;
+        if(existingUser == null){
+            throw new UserException("User Not logged in");
+        }
+
+        Optional<Feedback> feedback = frepo.findById(feedbackId);
+
+        if(feedback.isPresent()){
+
+            Feedback fd = feedback.get();
+
+            if(fd.getUser().getEmail().equals(existingUser.getEmail())){
+
+                frepo.delete(fd);
+
+                return fd;
+
+            }else {
+                throw new UserException("User does not match with this Email plz user other email");
+            }
+
+
+        }else {
+            throw new FeedbackException("Feedback not found with this Id");
+        }
+    }
+
+    @Override
+    public List<Feedback> viewAllFeedback(String key) throws FeedbackException, UserException {
+
+        CurrentUserSession existingUSer = crepo.findByUuid(key);
+
+        if(existingUSer == null){
+            throw new UserException("Plz login ");
+        }
+
+        if (existingUSer.getUserType().name().equals("ADMIN")){
+            List<Feedback> feedbacks = frepo.findAll();
+
+            if (feedbacks.size() > 0){
+                return feedbacks;
+            }else {
+                throw new FeedbackException("No feedbacks found");
+            }
+
+
+        }else {
+            throw new UserException("Plz login as admin");
+        }
+
     }
 }

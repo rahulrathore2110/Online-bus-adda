@@ -41,19 +41,29 @@ public class FeedbackController {
 
     }
 
-    @GetMapping("/feedback/{id}")
-    public ResponseEntity<Feedback> getFeedbackHandler(@Valid @PathVariable("id") Integer id) throws FeedbackException{
+    @GetMapping("/feedback/{id}/{key}")
+    public ResponseEntity<Feedback> getFeedbackHandler(@Valid @PathVariable("id") Integer id,
+                                                       @PathVariable("key") String key) throws FeedbackException, UserException {
 
-        Feedback feedback1 = fservice.viewFeedback(id);
+        Feedback feedback1 = fservice.viewFeedback(id,key);
+
+        return new ResponseEntity<Feedback>(feedback1, HttpStatus.ACCEPTED);
+
+    }
+    @DeleteMapping("/feedback/{id}/{key}")
+    public ResponseEntity<Feedback> deleteFeedbackHandler(@Valid @PathVariable("id") Integer id,
+                                                       @PathVariable("key") String key) throws FeedbackException, UserException {
+
+        Feedback feedback1 = fservice.deleteFeedback(id, key);
 
         return new ResponseEntity<Feedback>(feedback1, HttpStatus.ACCEPTED);
 
     }
 
     @GetMapping("/feedbacks")
-    public ResponseEntity<List<Feedback>> getFeedbackHandler() throws FeedbackException{
+    public ResponseEntity<List<Feedback>> getFeedbackHandler(@Valid @PathVariable("key") String key) throws FeedbackException, UserException {
 
-        List<Feedback> feedback1 = fservice.viewAllFeedback();
+        List<Feedback> feedback1 = fservice.viewAllFeedback(key);
 
         return new ResponseEntity<List<Feedback>>(feedback1, HttpStatus.ACCEPTED);
 
