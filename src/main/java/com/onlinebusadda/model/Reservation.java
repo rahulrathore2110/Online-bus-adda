@@ -3,6 +3,7 @@ package com.onlinebusadda.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,10 +24,11 @@ public class Reservation {
 	@NotNull
     private String reservationStatus;
 	@NotNull
-	@JsonFormat(pattern="yyyy-MM-dd")
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//	@JsonFormat(pattern="yyyy-mm-dd")
 	private LocalDate reservationDate;
 	@NotNull
+//	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm:ss")
 	private LocalTime reservationTime;
 	@NotNull
 	private String source;
@@ -35,10 +37,10 @@ public class Reservation {
 	@NotNull
 	private Integer noOfSeatsBooked;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Bus bus;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
 
 	public Reservation() {}
