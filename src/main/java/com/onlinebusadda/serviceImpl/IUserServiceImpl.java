@@ -138,7 +138,7 @@ public class IUserServiceImpl implements IUserService{
 
 	}
 
-	@Override
+	/*@Override
 	public List<User> viewAllUsers(String key) throws UserException {
 		
 		CurrentUserSession loggedInUser=srepo.findByUuid(key);
@@ -160,6 +160,32 @@ public class IUserServiceImpl implements IUserService{
 			}
 			
 
+	}*/
+	
+	@Override
+	public List<User> viewAllUsers(String key) throws UserException {
+		
+		CurrentUserSession loggedInUser=srepo.findByUuid(key);
+		
+		if(loggedInUser==null) {
+			
+			throw new UserException("Please provide a valid key to find all user.");
+		}
+		
+		if (loggedInUser.getUserType().name().equals("ADMIN")) {
+			
+			List<User> users=uRepo.findAll();
+			
+			if(users.size()!=0) {
+				return users;
+			}
+			
+			else {
+				throw new UserException("No User Found.");
+			}
+		}
+		
+		else throw new UserException("Access denied");
 	}
 
 }
