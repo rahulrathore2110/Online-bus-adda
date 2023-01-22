@@ -28,7 +28,7 @@ public class Reservation {
 //	@JsonFormat(pattern="yyyy-mm-dd")
 	private LocalDate reservationDate;
 	@NotNull
-//	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm:ss")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm:ss")
 	private LocalTime reservationTime;
 	@NotNull
 	private String source;
