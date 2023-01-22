@@ -31,7 +31,6 @@ public class User {
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-
 	private List<Reservation> reservation = new ArrayList<>();
 
 	@Enumerated

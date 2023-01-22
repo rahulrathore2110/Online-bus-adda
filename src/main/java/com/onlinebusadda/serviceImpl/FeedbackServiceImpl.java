@@ -38,6 +38,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public Feedback addFeedback(Feedback feedback, String key,Integer busId) throws FeedbackException,UserException,
             BusException {
+
         CurrentUserSession existingUser = crepo.findByUuid(key);
 
         if(existingUser == null){
@@ -45,6 +46,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
         User user = urepo.findByEmail(existingUser.getEmail());
+
 
        feedback.setUser(user);
 
@@ -107,7 +109,10 @@ public class FeedbackServiceImpl implements FeedbackService {
 
             Feedback fd = feedback.get();
 
+
+
             if(fd.getUser().getEmail().equals(existingUSer.getEmail())){
+
                 return fd;
 
             }else {
@@ -136,8 +141,12 @@ public class FeedbackServiceImpl implements FeedbackService {
 
             if(fd.getUser().getEmail().equals(existingUser.getEmail())){
 
+                System.out.println("dfjksdnvfjksdkfvd");
+                fd.setBus(null);
+                fd.setUser(null);
+                System.out.println("dfjksdnvfjksdkfvd");
                 frepo.delete(fd);
-
+                System.out.println("dfjksdnvfjksdkfvd");
                 return fd;
 
             }else {

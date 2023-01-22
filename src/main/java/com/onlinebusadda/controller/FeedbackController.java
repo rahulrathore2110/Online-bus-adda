@@ -60,7 +60,7 @@ public class FeedbackController {
 
     }
 
-    @GetMapping("/feedbacks")
+    @GetMapping("/feedbacks/{key}")
     public ResponseEntity<List<Feedback>> getFeedbackHandler(@Valid @PathVariable("key") String key) throws FeedbackException, UserException {
 
         List<Feedback> feedback1 = fservice.viewAllFeedback(key);
