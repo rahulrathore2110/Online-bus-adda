@@ -47,7 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
 			throw new UserException("Please provide a valid User key to reserve seats...!");
 		}
 		
-		Bus bus =	busRepo.findById(reservation.getBus().getBusId()).orElseThrow(() -> new BusException("Bus not found with bisId "+reservation.getBus().getBusId()));
+		Bus bus =	busRepo.findById(reservation.getBus().getBusId()).orElseThrow(() -> new BusException("Bus not found with busId "+reservation.getBus().getBusId()));
 		
 		User user = userRepo.findById(userLoginId).orElseThrow(()-> new UserException("User not found with userId "+userLoginId));
 		
@@ -97,29 +97,13 @@ public class ReservationServiceImpl implements ReservationService {
 			 throw new ReservationException("Reservation details not found with reservationId "+reservationId);
 		}
 		
-		Optional<User> userObject = userRepo.findById(loggedInUser.getCurrentId());
+		Reservation  reservation =  reservationObject.get();
 		
-		if(userObject.isEmpty()) {
-			 new UserException("User not found with ID "+loggedInUser.getCurrentId());
+		User userObject = userRepo.findByEmail(loggedInUser.getEmail());
+		
+		if(userObject == null) {
+			 new UserException("User not found with respective ID ");
 		}
-		
-		User user = userObject.get();
-		
-		if(user.getUserLoginId() != loggedInUser.getCurrentId()) {
-			throw new UserException("User details are Invalid, please try again :)");
-		}
-			
-			Reservation reservation = reservationObject.get();
-			
-			Bus bus = reservation.getBus();
-			
-			// Changing the state which should happen after canceling reservation
-			
-			bus.setAvailableSeats(bus.getAvailableSeats() + reservation.getNoOfSeatsBooked());
-			reservation.setReservationStatus("Cancelled");
-			reservation.setBus(null);
-			
-			user.setReservation(null);
 			
 			reservationRepo.delete(reservation);
 			
@@ -130,13 +114,11 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public Reservation viewReservation(Integer reservationId, String uuid) throws ReservationException, UserException {
-CurrentUserSession loggedInUser = currentUserSessionRepo.findByUuid(uuid);
+		CurrentUserSession loggedInUser = currentUserSessionRepo.findByUuid(uuid);
 		
 		if(loggedInUser == null) {
 			throw new UserException("Please provide a valid uid to view reservation..!");
 		}
-		
-//		if(loggedInUser.getUserType().equals("ADMIN"))
 		
 		Optional<Reservation> Optional = reservationRepo.findById(reservationId);
 		Reservation foundReservation = Optional.orElseThrow(()-> new ReservationException("No reservation found with reservationId "+reservationId));
@@ -173,8 +155,5 @@ CurrentUserSession loggedInUser = currentUserSessionRepo.findByUuid(uuid);
 		else
 			throw new ReservationException("error occurred while retrieving reservations for the given date "+date);
 	}
-
-	
-
 	
 }
