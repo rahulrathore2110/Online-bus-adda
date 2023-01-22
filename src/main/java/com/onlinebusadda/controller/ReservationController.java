@@ -20,8 +20,10 @@ import com.onlinebusadda.model.Reservation;
 import com.onlinebusadda.service.ReservationService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
+
+// This class is a controller layer, which contains the persistence logic.
 @RestController
-@RequestMapping("rest")
+@RequestMapping("/reservation")
 public class ReservationController {
 	
 	@Autowired

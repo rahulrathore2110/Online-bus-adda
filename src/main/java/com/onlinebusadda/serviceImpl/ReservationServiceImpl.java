@@ -20,7 +20,8 @@ import com.onlinebusadda.repository.ReservationRepo;
 import com.onlinebusadda.repository.UserRepo;
 import com.onlinebusadda.service.ReservationService;
 
-@Service
+// This is a service layer class which contains the main business logic..!
+@Service 
 public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
@@ -147,9 +148,9 @@ CurrentUserSession loggedInUser = currentUserSessionRepo.findByUuid(uuid);
 	@Override
 	public List<Reservation> viewAllReservation(String uuid) throws ReservationException {
         
-		CurrentUserSession loggedInAdmin = currentUserSessionRepo.findByUuid(uuid);
+		CurrentUserSession loggedInUser = currentUserSessionRepo.findByUuid(uuid);
 		
-		if(loggedInAdmin == null) {
+		if(loggedInUser == null) {
 			throw new ReservationException("Please provide a valid uid to view all reservations...!");
 		}
 		

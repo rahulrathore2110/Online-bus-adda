@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.onlinebusadda.model.Reservation;
 
+
+// This is a Data Access Layer class, which contains the data access logic
 @Repository
 public interface ReservationRepo extends JpaRepository<Reservation, Integer> {
 
