@@ -1,9 +1,11 @@
 package com.onlinebusadda.serviceImpl;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Random;
 
-import com.onlinebusadda.exception.UserException;
+
 import com.onlinebusadda.model.CurrentUserSession;
 import com.onlinebusadda.repository.CurrentUserSessionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,6 @@ import com.onlinebusadda.model.User;
 import com.onlinebusadda.repository.UserRepo;
 import com.onlinebusadda.service.LoginService;
 
-import net.bytebuddy.utility.RandomString;
 
 @Service
 public class LoginServiceImpl implements LoginService{
@@ -25,7 +26,7 @@ public class LoginServiceImpl implements LoginService{
 
 	@Autowired
 	private CurrentUserSessionRepo crepo;
-	
+
 
 
 	@Override
@@ -43,8 +44,10 @@ public class LoginServiceImpl implements LoginService{
 		}
 
 		if(existingUser.getPassword().equals(dto.getPassword())){
+			byte[] array = new byte[7]; // length is bounded by 7
+			new Random().nextBytes(array);
+			String key = new String(array, Charset.forName("UTF-8"));
 
-			String key = RandomString.make(8);
 
 			CurrentUserSession currentUserSession = new CurrentUserSession(dto.getEmail(), key, LocalDateTime.now(),
 					dto.getUserType());

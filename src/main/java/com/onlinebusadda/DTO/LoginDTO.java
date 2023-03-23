@@ -1,8 +1,8 @@
 package com.onlinebusadda.DTO;
 
 import com.onlinebusadda.model.UserType;
+import jakarta.validation.constraints.NotNull;
 
-import javax.validation.constraints.NotNull;
 
 public class LoginDTO {
 	

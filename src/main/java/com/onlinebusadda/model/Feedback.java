@@ -1,8 +1,8 @@
 package com.onlinebusadda.model;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Feedback {

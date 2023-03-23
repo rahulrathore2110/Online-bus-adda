@@ -5,12 +5,11 @@ import com.onlinebusadda.exception.FeedbackException;
 import com.onlinebusadda.exception.UserException;
 import com.onlinebusadda.model.Feedback;
 import com.onlinebusadda.service.FeedbackService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

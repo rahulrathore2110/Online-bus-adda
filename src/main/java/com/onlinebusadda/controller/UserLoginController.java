@@ -1,8 +1,8 @@
 package com.onlinebusadda.controller;
 
-import javax.validation.Valid;
 
 import com.onlinebusadda.model.CurrentUserSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

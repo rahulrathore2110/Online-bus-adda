@@ -2,23 +2,16 @@ package com.onlinebusadda.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
-
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity   // Its Bean class so we need to annotate with the annotation @Entity 
+@Entity   // Its Bean class so we need to annotate with the annotation @Entity
 public class Reservation {
 
-	@Id 	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer reservationID;
 	@NotNull
